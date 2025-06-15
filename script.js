@@ -2,7 +2,7 @@ const chatBox = document.getElementById('chat-box');
 const input = document.getElementById('user-input');
 
 // NIE wymaga klucza API – używamy publicznego proxy serwera
-const apiUrl = 'https://huggingface-proxy.example.com/api/janusz'; // <-- symulowany endpoint proxy
+const apiUrl = 'https://kaleidoscopic-longma-7792f0.netlify.app/.netlify/functions/janusz'; // <-- symulowany endpoint proxy
 
 input.addEventListener("keypress", function (e) {
   if (e.key === "Enter") sendMessage();

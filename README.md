@@ -1,12 +1,11 @@
-# Janusz – Chatbot Spiskowiec (Proxy Version)
+# Janusz – Chatbot Spiskowiec (Frontend)
 
-Chatbot Janusz, który wierzy w najbardziej absurdalne teorie spiskowe – teraz działa w 100% za darmo, bez tokenu!
+Frontend chatbota Janusza – łączy się z backendem proxy opublikowanym na Netlify.
 
-## Jak to działa
+## Backend:
+https://kaleidoscopic-longma-7792f0.netlify.app/.netlify/functions/janusz
 
-- Frontend łączy się z publicznym serwerem proxy (np. Node.js lub Python)
-- Proxy rozmawia z darmowym modelem AI przez Hugging Face
-- Ty nie musisz mieć klucza
-
-> Przykładowy adres proxy: https://huggingface-proxy.example.com/api/janusz
-> Backend można postawić na Render, Replit, Vercel, Railway, itp.
+## Jak używać:
+1. Wgraj ten projekt na GitHub
+2. Podłącz do Netlify (jako frontend)
+3. Gotowe!
