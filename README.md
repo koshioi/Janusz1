@@ -1,12 +1,12 @@
-# Janusz – Chatbot Spiskowiec (Hugging Face version)
+# Janusz – Chatbot Spiskowiec (Proxy Version)
 
-Satyryczny chatbot AI, który wierzy w najbardziej absurdalne teorie spiskowe. Wersja z darmowym API Hugging Face.
+Chatbot Janusz, który wierzy w najbardziej absurdalne teorie spiskowe – teraz działa w 100% za darmo, bez tokenu!
 
-## Jak używać
+## Jak to działa
 
-1. Zarejestruj się na https://huggingface.co
-2. Wygeneruj token na stronie https://huggingface.co/settings/tokens
-3. Wklej token do pliku `script.js` w miejsce `hf_TWÓJ_TOKEN_TUTAJ`
-4. Wgraj na GitHub i uruchom przez Netlify
+- Frontend łączy się z publicznym serwerem proxy (np. Node.js lub Python)
+- Proxy rozmawia z darmowym modelem AI przez Hugging Face
+- Ty nie musisz mieć klucza
 
-> Projekt ma charakter wyłącznie humorystyczny i edukacyjny.
+> Przykładowy adres proxy: https://huggingface-proxy.example.com/api/janusz
+> Backend można postawić na Render, Replit, Vercel, Railway, itp.
