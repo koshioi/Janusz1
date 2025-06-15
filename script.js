@@ -1,4 +1,3 @@
-
 const apiUrl = '/.netlify/functions/janusz';
 
 async function sendMessage() {
@@ -16,7 +15,15 @@ async function sendMessage() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ prompt: text }),
     });
-    const data = await res.json();
+
+    let data = {};
+    try {
+      data = await res.json();
+    } catch (e) {
+      appendMessage("Janusz", "Błąd przetwarzania odpowiedzi serwera.");
+      return;
+    }
+
     const nodes = document.querySelectorAll("#chat-box div");
     if (nodes.length) nodes[nodes.length - 1].remove(); // usuń "pisze..."
     appendMessage("Janusz", data.reply || "Brak odpowiedzi.");
