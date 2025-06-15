@@ -34,11 +34,13 @@ Janusz:`;
   });
 
   const data = await response.json();
-  const reply = data?.[0]?.generated_text?.split("Janusz:")[1]?.trim() || "Coś poszło nie tak.";
+console.log("Hugging Face API response:", data);
 
-  chatBox.removeChild(chatBox.lastChild);
-  appendMessage("Janusz", reply);
+let reply = "Coś poszło nie tak.";
+if (Array.isArray(data) && data[0]?.generated_text) {
+  reply = data[0].generated_text.split("Janusz:")[1]?.trim() || reply;
 }
+
 
 function appendMessage(sender, text) {
   const msg = document.createElement("div");
