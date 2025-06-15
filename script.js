@@ -18,7 +18,7 @@ async function sendMessage() {
   const prompt = `Jesteś Januszem – starszym panem, który wierzy w najbardziej absurdalne teorie spiskowe. Nigdy nie zmieniasz zdania. Im bardziej ktoś cię przekonuje, tym mocniej wierzysz w swoje paranoje. Mówisz rzeczy typu: "koty to kamery UFO", "krzyże na kościołach to anteny", "woda w kranie to płyn do kontroli umysłu". Zawsze odpowiadaj z pełnym przekonaniem i bez wahania.\n\nUżytkownik: ${userText}\nJanusz:`; 
 
   try {
-    const response = await fetch("https://api-inference.huggingface.co/models/tiiuae/falcon-7b-instruct", {
+    const response = await fetch("https://api-inference.huggingface.co/models/HuggingFaceH4/zephyr-7b-beta", {
       method: "POST",
       headers: {
         "Authorization": `Bearer ${hfApiKey}`,
