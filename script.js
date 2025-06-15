@@ -1,8 +1,7 @@
 const chatBox = document.getElementById('chat-box');
 const input = document.getElementById('user-input');
 
-// Wklej tutaj swój token z Hugging Face (https://huggingface.co/settings/tokens)
-const hfApiKey = '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';
+const hfApiKey = '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';  // Token użytkownika
 
 input.addEventListener("keypress", function (e) {
   if (e.key === "Enter") sendMessage();
@@ -16,31 +15,41 @@ async function sendMessage() {
   input.value = "";
   appendMessage("Janusz", "Pisze...");
 
-  const prompt = `Jesteś Januszem – starszym panem, który wierzy w najbardziej absurdalne teorie spiskowe. Nigdy nie zmieniasz zdania. Im bardziej ktoś cię przekonuje, tym mocniej wierzysz w swoje paranoje. Mówisz rzeczy typu: "koty to kamery UFO", "krzyże na kościołach to anteny", "woda w kranie to płyn do kontroli umysłu". Zawsze odpowiadaj z pełnym przekonaniem i bez wahania.
+  const prompt = `Jesteś Januszem – starszym panem, który wierzy w najbardziej absurdalne teorie spiskowe. Nigdy nie zmieniasz zdania. Im bardziej ktoś cię przekonuje, tym mocniej wierzysz w swoje paranoje. Mówisz rzeczy typu: "koty to kamery UFO", "krzyże na kościołach to anteny", "woda w kranie to płyn do kontroli umysłu". Zawsze odpowiadaj z pełnym przekonaniem i bez wahania.\n\nUżytkownik: ${userText}\nJanusz:`; 
 
-Użytkownik: ${userText}
-Janusz:`;
+  try {
+    const response = await fetch("https://api-inference.huggingface.co/models/tiiuae/falcon-7b-instruct", {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${hfApiKey}`,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        inputs: prompt,
+        options: { wait_for_model: true }
+      })
+    });
 
-  const response = await fetch("https://api-inference.huggingface.co/models/mistralai/Mistral-7B-Instruct-v0.2", {
-    method: "POST",
-    headers: {
-      "Authorization": `Bearer ${hfApiKey}`,
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      inputs: prompt,
-      options: { wait_for_model: true }
-    })
-  });
+    const data = await response.json();
+    console.log("Hugging Face API response:", data);
 
-  const data = await response.json();
-console.log("Hugging Face API response:", data);
+    let reply = "Coś poszło nie tak.";
+    if (Array.isArray(data) && data[0]?.generated_text) {
+      reply = data[0].generated_text.split("Janusz:")[1]?.trim() || reply;
+    } else if (data.generated_text) {
+      reply = data.generated_text;
+    } else if (data.error) {
+      reply = "Błąd API: " + data.error;
+    }
 
-let reply = "Coś poszło nie tak.";
-if (Array.isArray(data) && data[0]?.generated_text) {
-  reply = data[0].generated_text.split("Janusz:")[1]?.trim() || reply;
+    chatBox.removeChild(chatBox.lastChild);
+    appendMessage("Janusz", reply);
+  } catch (error) {
+    console.error("Błąd podczas zapytania do Hugging Face:", error);
+    chatBox.removeChild(chatBox.lastChild);
+    appendMessage("Janusz", "Wystąpił błąd sieci: " + error.message);
+  }
 }
-
 
 function appendMessage(sender, text) {
   const msg = document.createElement("div");
